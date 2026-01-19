@@ -283,4 +283,13 @@ All colors MUST be HSL.
     opacity: 1;
   }
 
+  .mock-card {
+    border-radius: 24px;
+    padding: 16px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.78));
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    box-shadow: 0 24px 60px -40px rgba(15, 23, 42, 0.45);
+    backdrop-filter: blur(8px);
+  }
+
 }

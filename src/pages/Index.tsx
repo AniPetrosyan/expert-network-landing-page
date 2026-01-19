@@ -54,27 +54,69 @@ const Index = () => {
           <div className="pointer-events-none absolute inset-0 hero-sheen" />
           <div className="pointer-events-none absolute inset-0 hero-grain" />
           <div className="container relative">
-            <div className="mx-auto max-w-3xl space-y-6 text-center">
-              <div className="inline-flex items-center gap-2 rounded-full bg-card/80 px-4 py-2 text-sm font-medium text-primary shadow-soft ring-1 ring-border backdrop-blur">
-                <Sparkles className="h-4 w-4" />
-                Built for fast diligence
+            <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]">
+              <div className="space-y-6 text-center lg:text-left">
+                <div className="inline-flex items-center gap-2 rounded-full bg-card/80 px-4 py-2 text-sm font-medium text-primary shadow-soft ring-1 ring-border backdrop-blur">
+                  <Sparkles className="h-4 w-4" />
+                  Built for fast diligence
+                </div>
+                <div className="space-y-4">
+                  <h1 className="text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
+                    Your fastest AI expert network – instantly book and learn from vetted experts.
+                  </h1>
+                  <p className="text-lg text-muted-foreground">
+                    Sensei recommends best-fit experts in minutes and automates outreach, scheduling, compliance, and post-call analysis.
+                  </p>
+                </div>
+                <form onSubmit={handleSubmit} className="mx-auto flex w-full max-w-2xl flex-col gap-3 sm:flex-row lg:mx-0">
+                  <Input name="email" type="email" placeholder="Work email" required className="h-12 text-base shadow-soft" />
+                  <Button type="submit" size="lg" className="h-12 px-6 bg-gradient-primary text-primary-foreground shadow-medium transition-transform hover:-translate-y-[2px]">
+                    Join the waitlist
+                    <ArrowRight className="h-4 w-4" />
+                  </Button>
+                </form>
+                <p className="text-sm text-muted-foreground">No spam. We’ll notify you as soon as seats open.</p>
               </div>
-              <div className="space-y-4">
-                <h1 className="text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
-                  Your fastest AI expert network – instantly book and learn from vetted experts.
-                </h1>
-                <p className="text-lg text-muted-foreground">
-                  Sensei recommends best-fit experts in minutes and automates outreach, scheduling, compliance, and post-call analysis.
-                </p>
+              <div className="relative hidden items-center justify-center lg:flex">
+                <div className="absolute right-6 top-4 h-64 w-64 rounded-[32px] bg-white/80 shadow-[0_30px_80px_-40px_rgba(15,23,42,0.45)] backdrop-blur-sm" />
+                <div className="relative z-10 grid gap-5">
+                  <div className="mock-card w-[320px] animate-hero-float">
+                    <div className="flex items-center justify-between text-xs text-muted-foreground">
+                      <span className="font-semibold uppercase tracking-wide text-primary">Top matches</span>
+                      <span>Today</span>
+                    </div>
+                    <div className="mt-4 space-y-3">
+                      {["Former Bain Partner", "PE Ops Lead", "Pricing Strategist"].map((label) => (
+                        <div key={label} className="flex items-center justify-between rounded-xl bg-white/80 px-3 py-2 shadow-sm">
+                          <div className="flex items-center gap-3">
+                            <span className="h-9 w-9 rounded-full bg-gradient-to-br from-primary/30 to-sky-200/80" />
+                            <div>
+                              <p className="text-sm font-semibold text-foreground">{label}</p>
+                              <p className="text-xs text-muted-foreground">Available in 24h</p>
+                            </div>
+                          </div>
+                          <span className="rounded-full bg-primary/10 px-2 py-1 text-xs font-semibold text-primary">Match</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="mock-card w-[280px] animate-hero-drift">
+                    <div className="flex items-center justify-between text-xs text-muted-foreground">
+                      <span className="font-semibold uppercase tracking-wide text-primary">Call summary</span>
+                      <span>Auto-notes</span>
+                    </div>
+                    <div className="mt-3 space-y-2 text-sm text-foreground">
+                      <p className="rounded-lg bg-white/80 px-3 py-2 shadow-sm">Competitive pricing pressure eased in Q3.</p>
+                      <p className="rounded-lg bg-white/80 px-3 py-2 shadow-sm">Regulatory change likely in 6–9 months.</p>
+                      <p className="rounded-lg bg-white/80 px-3 py-2 shadow-sm">Top growth vector: enterprise upsell.</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="absolute -bottom-6 left-8 h-24 w-64 rounded-2xl bg-white/80 px-4 py-3 text-xs text-muted-foreground shadow-soft">
+                  “Sensei lined up 3 perfect experts before lunch.”
+                  <span className="mt-2 block text-xs font-semibold text-primary">— PE Associate</span>
+                </div>
               </div>
-              <form onSubmit={handleSubmit} className="mx-auto flex w-full max-w-2xl flex-col gap-3 sm:flex-row">
-                <Input name="email" type="email" placeholder="Work email" required className="h-12 text-base shadow-soft" />
-                <Button type="submit" size="lg" className="h-12 px-6 bg-gradient-primary text-primary-foreground shadow-medium transition-transform hover:-translate-y-[2px]">
-                  Join the waitlist
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
-              </form>
-              <p className="text-sm text-muted-foreground">No spam. We’ll notify you as soon as seats open.</p>
             </div>
           </div>
         </section>
@@ -126,7 +168,7 @@ const Index = () => {
               </p>
             </div>
             <div className="mx-auto grid max-w-5xl gap-6 md:grid-cols-2">
-              <div className="card-tilt relative rounded-2xl border border-border/70 bg-gradient-to-br from-white via-white to-accent/40 p-6 shadow-soft">
+              <div className="card-tilt relative rounded-2xl border border-primary/15 bg-gradient-to-br from-white via-white to-primary/10 p-6 shadow-soft">
                 <div className="flex items-center gap-3 text-primary">
                   <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/10 text-primary shadow-soft">
                     <Clock3 className="h-5 w-5" />
@@ -137,7 +179,7 @@ const Index = () => {
                   Automated workflows keep diligence moving at deal speed.
                 </p>
               </div>
-              <div className="card-tilt relative rounded-2xl border border-border/70 bg-gradient-to-br from-white via-white to-primary/10 p-6 shadow-soft">
+              <div className="card-tilt relative rounded-2xl border border-sky-200/60 bg-gradient-to-br from-white via-white to-sky-100/70 p-6 shadow-soft">
                 <div className="flex items-center gap-3 text-primary">
                   <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-accent text-primary shadow-soft">
                     <Sparkles className="h-5 w-5" />
@@ -148,7 +190,7 @@ const Index = () => {
                   Enter your diligence request. Sensei finds best-fit experts in minutes.
                 </p>
               </div>
-              <div className="card-tilt relative rounded-2xl border border-border/70 bg-gradient-to-br from-white via-white to-secondary/70 p-6 shadow-soft">
+              <div className="card-tilt relative rounded-2xl border border-teal-200/60 bg-gradient-to-br from-white via-white to-teal-100/70 p-6 shadow-soft">
                 <div className="flex items-center gap-3 text-primary">
                   <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-secondary text-primary shadow-soft">
                     <MessagesSquare className="h-5 w-5" />
@@ -159,7 +201,7 @@ const Index = () => {
                   Type in what you need. We handle outreach, screening, scheduling, and compliance.
                 </p>
               </div>
-              <div className="card-tilt relative rounded-2xl border border-border/70 bg-gradient-to-br from-white via-white to-primary/15 p-6 shadow-soft">
+              <div className="card-tilt relative rounded-2xl border border-indigo-200/60 bg-gradient-to-br from-white via-white to-indigo-100/70 p-6 shadow-soft">
                 <div className="flex items-center gap-3 text-primary">
                   <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/15 text-primary shadow-soft">
                     <BarChart3 className="h-5 w-5" />
@@ -171,7 +213,7 @@ const Index = () => {
                 </p>
               </div>
             </div>
-            <div className="card-tilt relative mx-auto w-full max-w-5xl rounded-2xl border border-border/70 bg-gradient-to-r from-secondary/70 via-white to-secondary/60 p-5 shadow-soft">
+            <div className="card-tilt relative mx-auto w-full max-w-5xl rounded-2xl border border-primary/10 bg-gradient-to-r from-primary/5 via-white to-sky-50/70 p-5 shadow-soft">
               <div className="flex items-start gap-3">
                 <span className="mt-0.5 flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/10 text-primary shadow-soft">
                   <CheckCircle2 className="h-5 w-5" />
