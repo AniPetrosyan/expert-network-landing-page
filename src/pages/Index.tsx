@@ -106,8 +106,8 @@ const Index = () => {
                       <span>Auto-notes</span>
                     </div>
                     <div className="mt-3 space-y-2 text-sm text-foreground">
-                      <p className="rounded-lg bg-white/80 px-3 py-2 shadow-sm">Calls in hours, not days.</p>
-                      <p className="rounded-lg bg-white/80 px-3 py-2 shadow-sm">Instant expert recommendations.</p>
+                      <p className="rounded-lg bg-white/80 px-3 py-2 shadow-sm">Competitive pricing pressure eased in Q3.</p>
+                      <p className="rounded-lg bg-white/80 px-3 py-2 shadow-sm">Regulatory change likely in 6–9 months.</p>
                       <p className="rounded-lg bg-white/80 px-3 py-2 shadow-sm">Switched from Target to competitor 1 after delivery delays.</p>
                     </div>
                   </div>
