@@ -86,7 +86,7 @@ const Index = () => {
                       <span>Today</span>
                     </div>
                     <div className="mt-4 space-y-3">
-                      {["Former Bain Partner", "PE Ops Lead", "Pricing Strategist"].map((label) => (
+                      {["Former Head of Sales", "Chief Product Officer", "Biotech Distributor"].map((label) => (
                         <div key={label} className="flex items-center justify-between rounded-xl bg-white/80 px-3 py-2 shadow-sm">
                           <div className="flex items-center gap-3">
                             <span className="h-9 w-9 rounded-full bg-gradient-to-br from-primary/30 to-sky-200/80" />
@@ -95,24 +95,24 @@ const Index = () => {
                               <p className="text-xs text-muted-foreground">Available in 24h</p>
                             </div>
                           </div>
-                          <span className="rounded-full bg-primary/10 px-2 py-1 text-xs font-semibold text-primary">Match</span>
+                          <span className="rounded-full bg-primary/10 px-2 py-1 text-xs font-semibold text-primary">Book</span>
                         </div>
                       ))}
                     </div>
                   </div>
-                  <div className="mock-card w-[280px] animate-hero-drift">
+                  <div className="mock-card ml-auto w-[280px] animate-hero-drift">
                     <div className="flex items-center justify-between text-xs text-muted-foreground">
                       <span className="font-semibold uppercase tracking-wide text-primary">Call summary</span>
                       <span>Auto-notes</span>
                     </div>
                     <div className="mt-3 space-y-2 text-sm text-foreground">
-                      <p className="rounded-lg bg-white/80 px-3 py-2 shadow-sm">Competitive pricing pressure eased in Q3.</p>
-                      <p className="rounded-lg bg-white/80 px-3 py-2 shadow-sm">Regulatory change likely in 6–9 months.</p>
-                      <p className="rounded-lg bg-white/80 px-3 py-2 shadow-sm">Top growth vector: enterprise upsell.</p>
+                      <p className="rounded-lg bg-white/80 px-3 py-2 shadow-sm">Calls in hours, not days.</p>
+                      <p className="rounded-lg bg-white/80 px-3 py-2 shadow-sm">Instant expert recommendations.</p>
+                      <p className="rounded-lg bg-white/80 px-3 py-2 shadow-sm">Switched from Target to competitor 1 after delivery delays.</p>
                     </div>
                   </div>
                 </div>
-                <div className="absolute -bottom-6 left-8 h-24 w-64 rounded-2xl bg-white/80 px-4 py-3 text-xs text-muted-foreground shadow-soft">
+                <div className="absolute -bottom-6 left-6 z-10 h-24 w-64 rounded-2xl bg-white/80 px-4 py-3 text-xs text-muted-foreground shadow-soft">
                   “Sensei lined up 3 perfect experts before lunch.”
                   <span className="mt-2 block text-xs font-semibold text-primary">— PE Associate</span>
                 </div>
