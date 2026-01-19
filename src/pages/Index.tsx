@@ -44,8 +44,15 @@ const Index = () => {
 
       <main className="flex flex-col gap-16 pb-16">
         {/* Screen 1: Hero */}
-        <section className="relative overflow-hidden bg-gradient-to-b from-primary/10 via-accent/40 to-background pt-12 pb-16">
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(59,130,246,0.18),transparent_30%),radial-gradient(circle_at_80%_0%,rgba(99,102,241,0.16),transparent_28%),radial-gradient(circle_at_50%_80%,rgba(45,212,191,0.18),transparent_30%)]" />
+        <section className="relative overflow-hidden bg-background pt-12 pb-16 text-foreground hero-animated-bg">
+          <div className="pointer-events-none absolute inset-0">
+            <div className="absolute -top-44 right-[-12%] h-[36rem] w-[36rem] rounded-full bg-[radial-gradient(circle,rgba(67,56,202,0.5),rgba(59,130,246,0.45),transparent_70%)] blur-[90px] animate-hero-float" />
+            <div className="absolute -top-20 right-[8%] h-[30rem] w-[30rem] rounded-full bg-[radial-gradient(circle,rgba(34,211,238,0.5),rgba(20,184,166,0.4),transparent_70%)] blur-[90px] animate-hero-drift" />
+            <div className="absolute -bottom-28 left-[-10%] h-[18rem] w-[18rem] rounded-full bg-[radial-gradient(circle,rgba(59,130,246,0.35),rgba(14,116,144,0.25),transparent_70%)] blur-[70px] animate-hero-swell" />
+          </div>
+          <div className="pointer-events-none absolute inset-0 hero-aurora" />
+          <div className="pointer-events-none absolute inset-0 hero-sheen" />
+          <div className="pointer-events-none absolute inset-0 hero-grain" />
           <div className="container relative">
             <div className="mx-auto max-w-3xl space-y-6 text-center">
               <div className="inline-flex items-center gap-2 rounded-full bg-card/80 px-4 py-2 text-sm font-medium text-primary shadow-soft ring-1 ring-border backdrop-blur">
@@ -105,70 +112,76 @@ const Index = () => {
         </section>
 
         {/* Screen 3: Capabilities */}
-        <section className="container space-y-6">
-          <div className="space-y-2 text-left sm:text-center">
+        <section className="relative overflow-hidden py-10">
+          <div className="pointer-events-none absolute inset-0">
+            <div className="absolute -top-24 left-[-10%] h-[18rem] w-[18rem] rounded-full bg-[radial-gradient(circle,rgba(99,102,241,0.18),transparent_65%)] blur-[80px]" />
+            <div className="absolute bottom-[-20%] right-[-8%] h-[22rem] w-[22rem] rounded-full bg-[radial-gradient(circle,rgba(34,211,238,0.2),transparent_65%)] blur-[90px]" />
+          </div>
+          <div className="container relative space-y-6">
+            <div className="space-y-2 text-left sm:text-center">
             <p className="text-sm font-semibold uppercase tracking-wide text-primary">Built for diligence</p>
-            <h2 className="text-3xl font-bold">Move faster with AI-powered expert matching</h2>
+              <h2 className="text-3xl font-bold">Move faster with AI-powered expert matching</h2>
             <p className="text-base text-muted-foreground sm:mx-auto sm:max-w-3xl">
               Sensei handles the entire expert workflow so your team can stay focused on the investment thesis.
             </p>
           </div>
-          <div className="grid gap-4 md:grid-cols-2">
-            <div className="rounded-xl border border-border bg-card p-6 shadow-soft transition-transform hover:-translate-y-1 hover:shadow-medium">
-              <div className="flex items-center gap-3 text-primary">
-                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary">
-                  <Clock3 className="h-5 w-5" />
-                </span>
-                <p className="font-semibold">Calls in hours, not days</p>
-              </div>
-              <p className="mt-3 text-sm text-muted-foreground">
-                Automated workflows keep diligence moving at deal speed.
-              </p>
-            </div>
-            <div className="rounded-xl border border-border bg-card p-6 shadow-soft transition-transform hover:-translate-y-1 hover:shadow-medium">
-              <div className="flex items-center gap-3 text-primary">
-                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-accent text-primary">
-                  <Sparkles className="h-5 w-5" />
-                </span>
-                <p className="font-semibold">Instant expert recommendations</p>
-              </div>
-              <p className="mt-3 text-sm text-muted-foreground">
-                Enter your diligence request. Sensei finds best-fit experts in minutes.
-              </p>
-            </div>
-            <div className="rounded-xl border border-border bg-card p-6 shadow-soft transition-transform hover:-translate-y-1 hover:shadow-medium">
-              <div className="flex items-center gap-3 text-primary">
-                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-secondary text-primary">
-                  <MessagesSquare className="h-5 w-5" />
-                </span>
-                <p className="font-semibold">No email back-and-forth</p>
-              </div>
-              <p className="mt-3 text-sm text-muted-foreground">
-                Type in what you need. We handle outreach, screening, scheduling, and compliance.
-              </p>
-            </div>
-            <div className="rounded-xl border border-border bg-card p-6 shadow-soft transition-transform hover:-translate-y-1 hover:shadow-medium">
-              <div className="flex items-center gap-3 text-primary">
-                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/15 text-primary">
-                  <BarChart3 className="h-5 w-5" />
-                </span>
-                <p className="font-semibold">Diligence intelligence in one place</p>
-              </div>
-              <p className="mt-3 text-sm text-muted-foreground">
-                Call transcripts, key takeaways, and synthesis ready for memos and slides.
-              </p>
-            </div>
-          </div>
-          <div className="rounded-xl border border-border bg-secondary/60 p-5 shadow-soft transition-transform hover:-translate-y-1 hover:shadow-medium">
-            <div className="flex items-start gap-3">
-              <span className="mt-0.5 flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary">
-                <CheckCircle2 className="h-5 w-5" />
-              </span>
-              <div>
-                <p className="font-semibold">Optional AI-led calls</p>
-                <p className="text-sm text-muted-foreground">
-                  Automate interviews with your questions and scripts. Sensei runs the call, then delivers a clean synthesis with citations to exact transcript moments.
+            <div className="grid gap-4 md:grid-cols-2">
+              <div className="card-tilt relative rounded-2xl border border-border/70 bg-gradient-to-br from-white via-white to-accent/40 p-6 shadow-soft">
+                <div className="flex items-center gap-3 text-primary">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/10 text-primary shadow-soft">
+                    <Clock3 className="h-5 w-5" />
+                  </span>
+                  <p className="font-semibold">Calls in hours, not days</p>
+                </div>
+                <p className="mt-3 text-sm text-muted-foreground">
+                  Automated workflows keep diligence moving at deal speed.
                 </p>
+              </div>
+              <div className="card-tilt relative rounded-2xl border border-border/70 bg-gradient-to-br from-white via-white to-primary/10 p-6 shadow-soft">
+                <div className="flex items-center gap-3 text-primary">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-accent text-primary shadow-soft">
+                    <Sparkles className="h-5 w-5" />
+                  </span>
+                  <p className="font-semibold">Instant expert recommendations</p>
+                </div>
+                <p className="mt-3 text-sm text-muted-foreground">
+                  Enter your diligence request. Sensei finds best-fit experts in minutes.
+                </p>
+              </div>
+              <div className="card-tilt relative rounded-2xl border border-border/70 bg-gradient-to-br from-white via-white to-secondary/70 p-6 shadow-soft">
+                <div className="flex items-center gap-3 text-primary">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-secondary text-primary shadow-soft">
+                    <MessagesSquare className="h-5 w-5" />
+                  </span>
+                  <p className="font-semibold">No email back-and-forth</p>
+                </div>
+                <p className="mt-3 text-sm text-muted-foreground">
+                  Type in what you need. We handle outreach, screening, scheduling, and compliance.
+                </p>
+              </div>
+              <div className="card-tilt relative rounded-2xl border border-border/70 bg-gradient-to-br from-white via-white to-primary/15 p-6 shadow-soft">
+                <div className="flex items-center gap-3 text-primary">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/15 text-primary shadow-soft">
+                    <BarChart3 className="h-5 w-5" />
+                  </span>
+                  <p className="font-semibold">Diligence intelligence in one place</p>
+                </div>
+                <p className="mt-3 text-sm text-muted-foreground">
+                  Call transcripts, key takeaways, and synthesis ready for memos and slides.
+                </p>
+              </div>
+            </div>
+            <div className="card-tilt relative rounded-2xl border border-border/70 bg-gradient-to-r from-secondary/70 via-white to-secondary/60 p-5 shadow-soft">
+              <div className="flex items-start gap-3">
+                <span className="mt-0.5 flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/10 text-primary shadow-soft">
+                  <CheckCircle2 className="h-5 w-5" />
+                </span>
+                <div>
+                  <p className="font-semibold">Optional AI-led calls</p>
+                  <p className="text-sm text-muted-foreground">
+                    Automate interviews with your questions and scripts. Sensei runs the call, then delivers a clean synthesis with citations to exact transcript moments.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -202,13 +215,13 @@ const Index = () => {
               ].map((item, index) => (
                 <div
                   key={item.title}
-                  className="rounded-xl border border-border bg-card p-6 shadow-soft transition-transform hover:-translate-y-1 hover:shadow-medium"
+                  className="rounded-xl border border-primary/30 bg-gradient-primary p-6 text-primary-foreground shadow-soft transition-transform hover:-translate-y-1 hover:shadow-medium"
                 >
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-primary text-primary-foreground font-semibold shadow-soft">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary-foreground/15 text-primary-foreground font-semibold shadow-soft">
                     {index + 1}
                   </div>
                   <h3 className="mt-4 text-lg font-semibold leading-tight">{item.title}</h3>
-                  <p className="mt-2 text-sm text-muted-foreground">{item.body}</p>
+                  <p className="mt-2 text-sm text-primary-foreground/85">{item.body}</p>
                 </div>
               ))}
             </div>
