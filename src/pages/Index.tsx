@@ -42,9 +42,9 @@ const Index = () => {
         </div>
       </header>
 
-      <main className="flex flex-col gap-16 pb-16">
+      <main className="flex flex-col gap-20 pb-20">
         {/* Screen 1: Hero */}
-        <section className="relative overflow-hidden bg-background pt-12 pb-16 text-foreground hero-animated-bg">
+        <section className="relative overflow-hidden bg-background pt-16 pb-20 text-foreground hero-animated-bg">
           <div className="pointer-events-none absolute inset-0">
             <div className="absolute -top-44 right-[-12%] h-[36rem] w-[36rem] rounded-full bg-[radial-gradient(circle,rgba(67,56,202,0.5),rgba(59,130,246,0.45),transparent_70%)] blur-[90px] animate-hero-float" />
             <div className="absolute -top-20 right-[8%] h-[30rem] w-[30rem] rounded-full bg-[radial-gradient(circle,rgba(34,211,238,0.5),rgba(20,184,166,0.4),transparent_70%)] blur-[90px] animate-hero-drift" />
@@ -81,7 +81,7 @@ const Index = () => {
 
         {/* Screen 2: Problem framing */}
         <section className="container">
-          <div className="rounded-2xl border border-border bg-card p-8 shadow-medium hover:-translate-y-[2px] transition-transform">
+          <div className="mx-auto max-w-5xl rounded-2xl border border-border bg-card p-10 shadow-medium transition-transform hover:-translate-y-[2px]">
             <div className="space-y-4">
               <h2 className="text-2xl font-semibold leading-tight">
                 When the clock is expensive, “we’ll get back to you in 48 hours” is not an option.
@@ -117,15 +117,15 @@ const Index = () => {
             <div className="absolute -top-24 left-[-10%] h-[18rem] w-[18rem] rounded-full bg-[radial-gradient(circle,rgba(99,102,241,0.18),transparent_65%)] blur-[80px]" />
             <div className="absolute bottom-[-20%] right-[-8%] h-[22rem] w-[22rem] rounded-full bg-[radial-gradient(circle,rgba(34,211,238,0.2),transparent_65%)] blur-[90px]" />
           </div>
-          <div className="container relative space-y-6">
+          <div className="container relative space-y-8">
             <div className="space-y-2 text-left sm:text-center">
-            <p className="text-sm font-semibold uppercase tracking-wide text-primary">Built for diligence</p>
+              <p className="text-sm font-semibold uppercase tracking-wide text-primary">Built for diligence</p>
               <h2 className="text-3xl font-bold">Move faster with AI-powered expert matching</h2>
-            <p className="text-base text-muted-foreground sm:mx-auto sm:max-w-3xl">
-              Sensei handles the entire expert workflow so your team can stay focused on the investment thesis.
-            </p>
-          </div>
-            <div className="grid gap-4 md:grid-cols-2">
+              <p className="text-base text-muted-foreground sm:mx-auto sm:max-w-3xl">
+                Sensei handles the entire expert workflow so your team can stay focused on the investment thesis.
+              </p>
+            </div>
+            <div className="mx-auto grid max-w-5xl gap-6 md:grid-cols-2">
               <div className="card-tilt relative rounded-2xl border border-border/70 bg-gradient-to-br from-white via-white to-accent/40 p-6 shadow-soft">
                 <div className="flex items-center gap-3 text-primary">
                   <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/10 text-primary shadow-soft">
@@ -171,7 +171,7 @@ const Index = () => {
                 </p>
               </div>
             </div>
-            <div className="card-tilt relative rounded-2xl border border-border/70 bg-gradient-to-r from-secondary/70 via-white to-secondary/60 p-5 shadow-soft">
+            <div className="card-tilt relative mx-auto w-full max-w-5xl rounded-2xl border border-border/70 bg-gradient-to-r from-secondary/70 via-white to-secondary/60 p-5 shadow-soft">
               <div className="flex items-start gap-3">
                 <span className="mt-0.5 flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/10 text-primary shadow-soft">
                   <CheckCircle2 className="h-5 w-5" />
@@ -188,7 +188,7 @@ const Index = () => {
         </section>
 
         {/* Screen 4: How it works */}
-        <section className="bg-gradient-to-b from-secondary/70 via-background to-secondary/50 py-12">
+        <section className="bg-gradient-to-b from-secondary/70 via-background to-secondary/50 py-16">
           <div className="container space-y-8">
             <div className="space-y-2 text-left sm:text-center">
               <p className="text-sm font-semibold uppercase tracking-wide text-primary">How it works</p>
