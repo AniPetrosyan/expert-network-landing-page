@@ -61,7 +61,7 @@ const Index = () => {
                   AI expert network that sources hundreds of candidates per your expert request and hands back the ones worth your time.
                 </div>
                 <div className="space-y-4">
-                  <h1 className="text-5xl font-extrabold leading-tight tracking-tight sm:text-6xl lg:text-7xl">
+                  <h1 className="text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
                     Submit a Request. Get Your Expert Shortlist.
                   </h1>
                   <p className="text-lg text-foreground/80">
