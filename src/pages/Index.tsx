@@ -58,22 +58,31 @@ const Index = () => {
               <div className="space-y-6 text-center lg:text-left">
                 <div className="inline-flex items-center gap-2 rounded-full bg-card/80 px-4 py-2 text-sm font-medium text-primary shadow-soft ring-1 ring-border backdrop-blur">
                   <Sparkles className="h-4 w-4" />
-                  Built for fast diligence
+                  AI expert network that sources hundreds of candidates per your expert request and hands back the ones worth your time.
                 </div>
                 <div className="space-y-4">
-                  <h1 className="text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
-                    Your fastest AI expert network – instantly book and learn from vetted experts.
+                  <h1 className="text-5xl font-extrabold leading-tight tracking-tight sm:text-6xl lg:text-7xl">
+                    Submit a Request. Get Your Expert Shortlist.
                   </h1>
-                  <p className="text-lg text-muted-foreground">
-                    Sensei recommends best-fit experts in minutes and automates outreach, scheduling, compliance, and post-call analysis.
+                  <p className="text-lg text-foreground/80">
+                    Tell us what you need and share your firm email — we'll handle the sourcing and send you the best matches.
                   </p>
                 </div>
-                <form onSubmit={handleSubmit} className="mx-auto flex w-full max-w-2xl flex-col gap-3 sm:flex-row lg:mx-0">
-                  <Input name="email" type="email" placeholder="Work email" required className="h-12 text-base shadow-soft" />
-                  <Button type="submit" size="lg" className="h-12 px-6 bg-gradient-primary text-primary-foreground shadow-medium transition-transform hover:-translate-y-[2px]">
-                    Join the waitlist
-                    <ArrowRight className="h-4 w-4" />
-                  </Button>
+                <form onSubmit={handleSubmit} className="mx-auto flex w-full max-w-2xl flex-col gap-3 lg:mx-0">
+                  <textarea
+                    name="request"
+                    placeholder="Describe your expert request (industry, role, geography, seniority, what you need to learn)"
+                    required
+                    rows={4}
+                    className="w-full resize-none rounded-md border border-input bg-background px-3 py-3 text-base shadow-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  />
+                  <div className="flex flex-col gap-3 sm:flex-row">
+                    <Input name="email" type="email" placeholder="Work email" required className="h-12 text-base shadow-soft" />
+                    <Button type="submit" size="lg" className="h-12 px-6 bg-gradient-primary text-primary-foreground shadow-medium transition-transform hover:-translate-y-[2px]">
+                      Join the waitlist
+                      <ArrowRight className="h-4 w-4" />
+                    </Button>
+                  </div>
                 </form>
                 <p className="text-sm text-muted-foreground">No spam. We’ll notify you as soon as seats open.</p>
               </div>
@@ -123,12 +132,12 @@ const Index = () => {
 
         {/* Screen 2: Problem framing */}
         <section className="container">
-          <div className="mx-auto max-w-5xl rounded-2xl border border-border bg-card p-10 shadow-medium transition-transform hover:-translate-y-[2px]">
-            <div className="space-y-4">
+          <div className="mx-auto max-w-5xl rounded-2xl border border-primary/20 bg-card p-10 shadow-[0_24px_60px_-45px_rgba(15,23,42,0.5)] transition-transform hover:-translate-y-[2px]">
+            <div className="space-y-4 border-l-4 border-primary/60 pl-6">
               <h2 className="text-2xl font-semibold leading-tight">
                 When the clock is expensive, “we’ll get back to you in 48 hours” is not an option.
               </h2>
-              <p className="text-base text-muted-foreground">
+              <p className="text-base text-foreground/75">
                 Sensei helps deal teams and diligence analysts validate markets, pricing, competition, and operations faster — without the
                 traditional expert-network lag.
               </p>
@@ -163,7 +172,7 @@ const Index = () => {
             <div className="space-y-2 text-left sm:text-center">
               <p className="text-sm font-semibold uppercase tracking-wide text-primary">Built for diligence</p>
               <h2 className="text-3xl font-bold">Move faster with AI-powered expert matching</h2>
-              <p className="text-base text-muted-foreground sm:mx-auto sm:max-w-3xl">
+              <p className="text-base text-foreground/70 sm:mx-auto sm:max-w-3xl">
                 Sensei handles the entire expert workflow so your team can stay focused on the investment thesis.
               </p>
             </div>
