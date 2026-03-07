@@ -58,20 +58,20 @@ const Index = () => {
               <div className="space-y-6 text-center lg:text-left">
                 <div className="inline-flex items-center gap-2 rounded-full bg-card/80 px-4 py-2 text-sm font-medium text-primary shadow-soft ring-1 ring-border backdrop-blur">
                   <Sparkles className="h-4 w-4" />
-                  AI expert network that sources hundreds of candidates per your expert request and hands back the ones worth your time.
+                  Built for fast diligence
                 </div>
                 <div className="space-y-4">
                   <h1 className="text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
                     Submit a Request. Get Your Expert Shortlist.
                   </h1>
                   <p className="text-lg text-foreground/80">
-                    Tell us what you need and share your firm email — we'll handle the sourcing and send you the best matches.
+                    AI expert network that sources hundreds of candidates per your expert request and hands back the ones worth your time.
                   </p>
                 </div>
                 <form onSubmit={handleSubmit} className="mx-auto flex w-full max-w-2xl flex-col gap-3 lg:mx-0">
                   <textarea
                     name="request"
-                    placeholder="Describe your expert request (industry, role, geography, seniority, what you need to learn)"
+                    placeholder="Describe what expert you need — we'll handle the sourcing and send you the best matches to your email."
                     required
                     rows={4}
                     className="w-full resize-none rounded-md border border-input bg-background px-3 py-3 text-base shadow-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
@@ -84,7 +84,6 @@ const Index = () => {
                     </Button>
                   </div>
                 </form>
-                <p className="text-sm text-muted-foreground">No spam. We’ll notify you as soon as seats open.</p>
               </div>
               <div className="relative hidden items-center justify-center lg:flex">
                 <div className="absolute right-6 top-4 h-64 w-64 rounded-[32px] bg-white/80 shadow-[0_30px_80px_-40px_rgba(15,23,42,0.45)] backdrop-blur-sm" />
@@ -94,13 +93,31 @@ const Index = () => {
                       <span className="font-semibold uppercase tracking-wide text-primary">Top matches</span>
                       <span>Today</span>
                     </div>
-                    <div className="mt-4 space-y-3">
-                      {["Former Head of Sales", "Chief Product Officer", "Biotech Distributor"].map((label) => (
-                        <div key={label} className="flex items-center justify-between rounded-xl bg-white/80 px-3 py-2 shadow-sm">
+                  <div className="mt-4 space-y-3">
+                      {[
+                        {
+                          label: "Former Head of Sales",
+                          photo: "/experts/expert-1.jpg",
+                        },
+                        {
+                          label: "Chief Product Officer",
+                          photo: "/experts/expert-2.jpg",
+                        },
+                        {
+                          label: "Biotech Distributor",
+                          photo: "/experts/expert-3.jpg",
+                        },
+                      ].map((item) => (
+                        <div key={item.label} className="flex items-center justify-between rounded-xl bg-white/80 px-3 py-2 shadow-sm">
                           <div className="flex items-center gap-3">
-                            <span className="h-9 w-9 rounded-full bg-gradient-to-br from-primary/30 to-sky-200/80" />
+                            <img
+                              src={item.photo}
+                              alt={item.label}
+                              className="h-9 w-9 rounded-full object-cover ring-2 ring-white"
+                              loading="lazy"
+                            />
                             <div>
-                              <p className="text-sm font-semibold text-foreground">{label}</p>
+                              <p className="text-sm font-semibold text-foreground">{item.label}</p>
                               <p className="text-xs text-muted-foreground">Available in 24h</p>
                             </div>
                           </div>
@@ -132,7 +149,7 @@ const Index = () => {
 
         {/* Screen 2: Problem framing */}
         <section className="container">
-          <div className="mx-auto max-w-5xl rounded-2xl border border-primary/20 bg-card p-10 shadow-[0_24px_60px_-45px_rgba(15,23,42,0.5)] transition-transform hover:-translate-y-[2px]">
+          <div className="mx-auto grid max-w-5xl items-center gap-8 rounded-2xl border border-primary/20 bg-card p-10 shadow-[0_24px_60px_-45px_rgba(15,23,42,0.5)] transition-transform hover:-translate-y-[2px] lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
             <div className="space-y-4 border-l-4 border-primary/60 pl-6">
               <h2 className="text-2xl font-semibold leading-tight">
                 When the clock is expensive, “we’ll get back to you in 48 hours” is not an option.
@@ -141,6 +158,44 @@ const Index = () => {
                 Sensei helps deal teams and diligence analysts validate markets, pricing, competition, and operations faster — without the
                 traditional expert-network lag.
               </p>
+            </div>
+            <div className="relative hidden h-48 items-center justify-center lg:flex">
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/10 via-transparent to-sky-200/40" />
+              <div className="relative z-10 grid gap-3">
+                <div className="flex items-center gap-3 rounded-2xl bg-white/90 px-4 py-3 shadow-soft">
+                <div className="flex -space-x-2">
+                  <img
+                    src="/experts/expert-1.jpg"
+                    alt="Expert profile"
+                    className="h-8 w-8 rounded-full object-cover ring-2 ring-white"
+                    loading="lazy"
+                  />
+                  <img
+                    src="/experts/expert-2.jpg"
+                    alt="Expert profile"
+                    className="h-8 w-8 rounded-full object-cover ring-2 ring-white"
+                    loading="lazy"
+                  />
+                  <img
+                    src="/experts/expert-3.jpg"
+                    alt="Expert profile"
+                    className="h-8 w-8 rounded-full object-cover ring-2 ring-white"
+                    loading="lazy"
+                  />
+                </div>
+                  <div>
+                    <p className="text-sm font-semibold text-foreground">3 experts confirmed</p>
+                    <p className="text-xs text-muted-foreground">Availability in 24 hours</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3 rounded-2xl bg-white/90 px-4 py-3 shadow-soft">
+                  <span className="h-10 w-10 rounded-xl bg-primary/10" />
+                  <div>
+                    <p className="text-sm font-semibold text-foreground">Auto-screened & compliant</p>
+                    <p className="text-xs text-muted-foreground">NDAs + conflicts checked</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -244,6 +299,15 @@ const Index = () => {
             <div className="space-y-2 text-left sm:text-center">
               <p className="text-sm font-semibold uppercase tracking-wide text-primary">How it works</p>
               <h2 className="text-3xl font-bold">From request to reportable insights</h2>
+            </div>
+            <div className="mx-auto hidden max-w-4xl items-center justify-between gap-4 rounded-full bg-white/80 px-6 py-3 text-xs text-muted-foreground shadow-soft md:flex">
+              <span className="font-semibold text-primary">Request</span>
+              <span className="h-1 w-12 rounded-full bg-primary/30" />
+              <span className="font-semibold text-primary">Match</span>
+              <span className="h-1 w-12 rounded-full bg-primary/30" />
+              <span className="font-semibold text-primary">Book</span>
+              <span className="h-1 w-12 rounded-full bg-primary/30" />
+              <span className="font-semibold text-primary">Synthesize</span>
             </div>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
               {[
