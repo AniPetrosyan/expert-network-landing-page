@@ -2,10 +2,24 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
 import { ArrowRight, BarChart3, CheckCircle2, Clock3, MessagesSquare, Sparkles } from "lucide-react";
+import { useEffect, useState } from "react";
 import type { FormEvent } from "react";
 
 const Index = () => {
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const [clientEmail, setClientEmail] = useState("");
+  const [accessCode, setAccessCode] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isSubmittingRequest, setIsSubmittingRequest] = useState(false);
+
+  useEffect(() => {
+    const savedEmail = localStorage.getItem("sensei_client_email");
+    if (savedEmail) {
+      setClientEmail(savedEmail);
+      setIsLoggedIn(true);
+    }
+  }, []);
+
+  const handleWaitlistSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const email = (formData.get("email") as string | null)?.trim();
@@ -16,6 +30,100 @@ const Index = () => {
     });
 
     event.currentTarget.reset();
+  };
+
+  const handleClientLogin = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const normalizedEmail = clientEmail.trim().toLowerCase();
+    const requiredCode = (import.meta.env.VITE_CLIENT_ACCESS_CODE as string | undefined)?.trim();
+
+    if (!normalizedEmail || !normalizedEmail.includes("@")) {
+      toast({
+        title: "Enter a valid work email",
+        description: "Please use your firm email to continue.",
+      });
+      return;
+    }
+
+    if (requiredCode && accessCode.trim() !== requiredCode) {
+      toast({
+        title: "Invalid access code",
+        description: "Please check the code and try again.",
+      });
+      return;
+    }
+
+    localStorage.setItem("sensei_client_email", normalizedEmail);
+    setClientEmail(normalizedEmail);
+    setIsLoggedIn(true);
+    setAccessCode("");
+    toast({
+      title: "Logged in",
+      description: "You can now submit your expert request.",
+    });
+  };
+
+  const handleClientLogout = () => {
+    localStorage.removeItem("sensei_client_email");
+    setIsLoggedIn(false);
+    setClientEmail("");
+    setAccessCode("");
+  };
+
+  const handleClientRequestSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!isLoggedIn) return;
+    const form = event.currentTarget;
+
+    const formData = new FormData(form);
+    const request = (formData.get("request") as string | null)?.trim();
+    const webhookUrl = import.meta.env.VITE_REQUEST_WEBHOOK_URL as string | undefined;
+
+    if (!request) {
+      toast({
+        title: "Request is empty",
+        description: "Please describe what expert you need.",
+      });
+      return;
+    }
+
+    if (!webhookUrl) {
+      toast({
+        title: "Submission endpoint missing",
+        description: "Set VITE_REQUEST_WEBHOOK_URL in .env.local so requests can notify your email.",
+      });
+      return;
+    }
+
+    setIsSubmittingRequest(true);
+    try {
+      const payload = new URLSearchParams({
+        type: "client_request",
+        clientEmail,
+        request,
+        submittedAt: new Date().toISOString(),
+        source: "sensei_landing",
+      });
+
+      await fetch(webhookUrl, {
+        method: "POST",
+        mode: "no-cors",
+        body: payload,
+      });
+
+      toast({
+        title: "Request submitted",
+        description: "Thanks — we sent this to your team by email.",
+      });
+      form.reset();
+    } catch (error) {
+      toast({
+        title: "Couldn’t submit request",
+        description: error instanceof Error ? error.message : "Please try again.",
+      });
+    } finally {
+      setIsSubmittingRequest(false);
+    }
   };
 
   const handleTopClick = () => {
@@ -43,7 +151,6 @@ const Index = () => {
       </header>
 
       <main className="flex flex-col gap-20 pb-20">
-        {/* Screen 1: Hero */}
         <section className="relative overflow-hidden bg-background pt-16 pb-20 text-foreground hero-animated-bg">
           <div className="pointer-events-none absolute inset-0">
             <div className="absolute -top-44 right-[-12%] h-[36rem] w-[36rem] rounded-full bg-[radial-gradient(circle,rgba(67,56,202,0.5),rgba(59,130,246,0.45),transparent_70%)] blur-[90px] animate-hero-float" />
@@ -53,6 +160,7 @@ const Index = () => {
           <div className="pointer-events-none absolute inset-0 hero-aurora" />
           <div className="pointer-events-none absolute inset-0 hero-sheen" />
           <div className="pointer-events-none absolute inset-0 hero-grain" />
+
           <div className="container relative">
             <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]">
               <div className="space-y-6 text-center lg:text-left">
@@ -68,23 +176,55 @@ const Index = () => {
                     AI expert network that sources hundreds of candidates per your expert request and hands back the ones worth your time.
                   </p>
                 </div>
-                <form onSubmit={handleSubmit} className="mx-auto flex w-full max-w-2xl flex-col gap-3 lg:mx-0">
-                  <textarea
-                    name="request"
-                    placeholder="Describe what expert you need — we'll handle the sourcing and send you the best matches to your email."
-                    required
-                    rows={4}
-                    className="w-full resize-none rounded-md border border-input bg-background px-3 py-3 text-base shadow-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                  />
-                  <div className="flex flex-col gap-3 sm:flex-row">
-                    <Input name="email" type="email" placeholder="Work email" required className="h-12 text-base shadow-soft" />
-                    <Button type="submit" size="lg" className="h-12 px-6 bg-gradient-primary text-primary-foreground shadow-medium transition-transform hover:-translate-y-[2px]">
-                      Join the waitlist
-                      <ArrowRight className="h-4 w-4" />
+                {!isLoggedIn ? (
+                  <form onSubmit={handleClientLogin} className="mx-auto flex w-full max-w-2xl flex-col gap-3 lg:mx-0">
+                    <Input
+                      name="clientEmail"
+                      type="email"
+                      placeholder="Firm email"
+                      required
+                      value={clientEmail}
+                      onChange={(event) => setClientEmail(event.target.value)}
+                      className="h-12 text-base shadow-soft"
+                    />
+                    <div className="flex flex-col gap-3 sm:flex-row">
+                      <Input
+                        name="accessCode"
+                        type="password"
+                        placeholder="Access code"
+                        value={accessCode}
+                        onChange={(event) => setAccessCode(event.target.value)}
+                        className="h-12 text-base shadow-soft"
+                      />
+                      <Button type="submit" size="lg" className="h-12 px-6 bg-gradient-primary text-primary-foreground shadow-medium transition-transform hover:-translate-y-[2px]">
+                        Client log in
+                        <ArrowRight className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </form>
+                ) : (
+                  <form onSubmit={handleClientRequestSubmit} className="mx-auto flex w-full max-w-2xl flex-col gap-3 lg:mx-0">
+                    <textarea
+                      name="request"
+                      placeholder="Describe what expert you need — we'll handle the sourcing and send you the best matches to your email."
+                      required
+                      rows={4}
+                      className="w-full resize-none rounded-md border border-input bg-background px-3 py-3 text-base shadow-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    />
+                    <div className="flex flex-col gap-3 sm:flex-row">
+                      <Input value={clientEmail} readOnly className="h-12 text-base shadow-soft" />
+                      <Button type="submit" size="lg" disabled={isSubmittingRequest} className="h-12 px-6 bg-gradient-primary text-primary-foreground shadow-medium transition-transform hover:-translate-y-[2px] disabled:opacity-70">
+                        {isSubmittingRequest ? "Submitting..." : "Submit request"}
+                        <ArrowRight className="h-4 w-4" />
+                      </Button>
+                    </div>
+                    <Button type="button" variant="outline" onClick={handleClientLogout} className="w-fit">
+                      Log out
                     </Button>
-                  </div>
-                </form>
+                  </form>
+                )}
               </div>
+
               <div className="relative hidden items-center justify-center lg:flex">
                 <div className="absolute right-6 top-4 h-64 w-64 rounded-[32px] bg-white/80 shadow-[0_30px_80px_-40px_rgba(15,23,42,0.45)] backdrop-blur-sm" />
                 <div className="relative z-10 grid gap-5">
@@ -93,29 +233,15 @@ const Index = () => {
                       <span className="font-semibold uppercase tracking-wide text-primary">Top matches</span>
                       <span>Today</span>
                     </div>
-                  <div className="mt-4 space-y-3">
+                    <div className="mt-4 space-y-3">
                       {[
-                        {
-                          label: "Former Head of Sales",
-                          photo: "/experts/expert-1.jpg",
-                        },
-                        {
-                          label: "Chief Product Officer",
-                          photo: "/experts/expert-2.jpg",
-                        },
-                        {
-                          label: "Biotech Distributor",
-                          photo: "/experts/expert-3.jpg",
-                        },
+                        { label: "Former Head of Sales", photo: "/experts/expert-1.jpg" },
+                        { label: "Chief Product Officer", photo: "/experts/expert-2.jpg" },
+                        { label: "Biotech Distributor", photo: "/experts/expert-3.jpg" },
                       ].map((item) => (
                         <div key={item.label} className="flex items-center justify-between rounded-xl bg-white/80 px-3 py-2 shadow-sm">
                           <div className="flex items-center gap-3">
-                            <img
-                              src={item.photo}
-                              alt={item.label}
-                              className="h-9 w-9 rounded-full object-cover ring-2 ring-white"
-                              loading="lazy"
-                            />
+                            <img src={item.photo} alt={item.label} className="h-9 w-9 rounded-full object-cover ring-2 ring-white" loading="lazy" />
                             <div>
                               <p className="text-sm font-semibold text-foreground">{item.label}</p>
                               <p className="text-xs text-muted-foreground">Available in 24h</p>
@@ -133,29 +259,28 @@ const Index = () => {
                     </div>
                     <div className="mt-3 space-y-2 text-sm text-foreground">
                       <p className="rounded-lg bg-white/80 px-3 py-2 shadow-sm">Competitive pricing pressure eased in Q3.</p>
-                      <p className="rounded-lg bg-white/80 px-3 py-2 shadow-sm">Regulatory change likely in 6–9 months.</p>
+                      <p className="rounded-lg bg-white/80 px-3 py-2 shadow-sm">Regulatory change likely in 6-9 months.</p>
                       <p className="rounded-lg bg-white/80 px-3 py-2 shadow-sm">Switched from Target to competitor 1 after delivery delays.</p>
                     </div>
                   </div>
                 </div>
                 <div className="absolute -bottom-6 left-6 z-10 h-24 w-64 rounded-2xl bg-white/80 px-4 py-3 text-xs text-muted-foreground shadow-soft">
-                  “Sensei lined up 3 perfect experts before lunch.”
-                  <span className="mt-2 block text-xs font-semibold text-primary">— PE Associate</span>
+                  "Sensei lined up 3 perfect experts before lunch."
+                  <span className="mt-2 block text-xs font-semibold text-primary">- PE Associate</span>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Screen 2: Problem framing */}
         <section className="container">
           <div className="mx-auto grid max-w-5xl items-center gap-8 rounded-2xl border border-primary/20 bg-card p-10 shadow-[0_24px_60px_-45px_rgba(15,23,42,0.5)] transition-transform hover:-translate-y-[2px] lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
             <div className="space-y-4 border-l-4 border-primary/60 pl-6">
               <h2 className="text-2xl font-semibold leading-tight">
-                When the clock is expensive, “we’ll get back to you in 48 hours” is not an option.
+                When the clock is expensive, "we'll get back to you in 48 hours" is not an option.
               </h2>
               <p className="text-base text-foreground/75">
-                Sensei helps deal teams and diligence analysts validate markets, pricing, competition, and operations faster — without the
+                Sensei helps deal teams and diligence analysts validate markets, pricing, competition, and operations faster - without the
                 traditional expert-network lag.
               </p>
             </div>
@@ -163,26 +288,11 @@ const Index = () => {
               <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/10 via-transparent to-sky-200/40" />
               <div className="relative z-10 grid gap-3">
                 <div className="flex items-center gap-3 rounded-2xl bg-white/90 px-4 py-3 shadow-soft">
-                <div className="flex -space-x-2">
-                  <img
-                    src="/experts/expert-1.jpg"
-                    alt="Expert profile"
-                    className="h-8 w-8 rounded-full object-cover ring-2 ring-white"
-                    loading="lazy"
-                  />
-                  <img
-                    src="/experts/expert-2.jpg"
-                    alt="Expert profile"
-                    className="h-8 w-8 rounded-full object-cover ring-2 ring-white"
-                    loading="lazy"
-                  />
-                  <img
-                    src="/experts/expert-3.jpg"
-                    alt="Expert profile"
-                    className="h-8 w-8 rounded-full object-cover ring-2 ring-white"
-                    loading="lazy"
-                  />
-                </div>
+                  <div className="flex -space-x-2">
+                    <img src="/experts/expert-1.jpg" alt="Expert profile" className="h-8 w-8 rounded-full object-cover ring-2 ring-white" loading="lazy" />
+                    <img src="/experts/expert-2.jpg" alt="Expert profile" className="h-8 w-8 rounded-full object-cover ring-2 ring-white" loading="lazy" />
+                    <img src="/experts/expert-3.jpg" alt="Expert profile" className="h-8 w-8 rounded-full object-cover ring-2 ring-white" loading="lazy" />
+                  </div>
                   <div>
                     <p className="text-sm font-semibold text-foreground">3 experts confirmed</p>
                     <p className="text-xs text-muted-foreground">Availability in 24 hours</p>
@@ -191,7 +301,7 @@ const Index = () => {
                 <div className="flex items-center gap-3 rounded-2xl bg-white/90 px-4 py-3 shadow-soft">
                   <span className="h-10 w-10 rounded-xl bg-primary/10" />
                   <div>
-                    <p className="text-sm font-semibold text-foreground">Auto-screened & compliant</p>
+                    <p className="text-sm font-semibold text-foreground">Auto-screened &amp; compliant</p>
                     <p className="text-xs text-muted-foreground">NDAs + conflicts checked</p>
                   </div>
                 </div>
@@ -200,7 +310,6 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Mid-page CTA */}
         <section className="container">
           <div className="flex flex-col gap-3 rounded-xl border border-dashed border-primary/30 bg-gradient-primary px-6 py-5 text-primary-foreground shadow-medium backdrop-blur sm:flex-row sm:items-center sm:justify-between">
             <div className="space-y-1">
@@ -208,7 +317,7 @@ const Index = () => {
               <p className="text-lg font-semibold text-primary-foreground">Get early access to the private beta.</p>
               <p className="text-sm text-primary-foreground/85">We’re onboarding a small number of PE teams each month.</p>
             </div>
-            <form onSubmit={handleSubmit} className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row">
+            <form onSubmit={handleWaitlistSubmit} className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row">
               <Input name="email" type="email" placeholder="Work email" required className="h-11 sm:w-64 bg-card/90 text-foreground shadow-soft ring-1 ring-border/60" />
               <Button type="submit" size="sm" className="h-11 bg-card text-primary font-semibold shadow-soft hover:-translate-y-[1px] transition-transform">
                 Join the waitlist
@@ -217,7 +326,6 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Screen 3: Capabilities */}
         <section className="relative overflow-hidden py-10">
           <div className="pointer-events-none absolute inset-0">
             <div className="absolute -top-24 left-[-10%] h-[18rem] w-[18rem] rounded-full bg-[radial-gradient(circle,rgba(99,102,241,0.18),transparent_65%)] blur-[80px]" />
@@ -239,9 +347,7 @@ const Index = () => {
                   </span>
                   <p className="font-semibold">Calls in hours, not days</p>
                 </div>
-                <p className="mt-3 text-sm text-muted-foreground">
-                  Automated workflows keep diligence moving at deal speed.
-                </p>
+                <p className="mt-3 text-sm text-muted-foreground">Automated workflows keep diligence moving at deal speed.</p>
               </div>
               <div className="card-tilt relative rounded-2xl border border-sky-200/60 bg-gradient-to-br from-white via-white to-sky-100/70 p-6 shadow-soft">
                 <div className="flex items-center gap-3 text-primary">
@@ -250,9 +356,7 @@ const Index = () => {
                   </span>
                   <p className="font-semibold">Instant expert recommendations</p>
                 </div>
-                <p className="mt-3 text-sm text-muted-foreground">
-                  Enter your diligence request. Sensei finds best-fit experts in minutes.
-                </p>
+                <p className="mt-3 text-sm text-muted-foreground">Enter your diligence request. Sensei finds best-fit experts in minutes.</p>
               </div>
               <div className="card-tilt relative rounded-2xl border border-teal-200/60 bg-gradient-to-br from-white via-white to-teal-100/70 p-6 shadow-soft">
                 <div className="flex items-center gap-3 text-primary">
@@ -261,9 +365,7 @@ const Index = () => {
                   </span>
                   <p className="font-semibold">No email back-and-forth</p>
                 </div>
-                <p className="mt-3 text-sm text-muted-foreground">
-                  Type in what you need. We handle outreach, screening, scheduling, and compliance.
-                </p>
+                <p className="mt-3 text-sm text-muted-foreground">Type in what you need. We handle outreach, screening, scheduling, and compliance.</p>
               </div>
               <div className="card-tilt relative rounded-2xl border border-indigo-200/60 bg-gradient-to-br from-white via-white to-indigo-100/70 p-6 shadow-soft">
                 <div className="flex items-center gap-3 text-primary">
@@ -272,9 +374,7 @@ const Index = () => {
                   </span>
                   <p className="font-semibold">Diligence intelligence in one place</p>
                 </div>
-                <p className="mt-3 text-sm text-muted-foreground">
-                  Call transcripts, key takeaways, and synthesis ready for memos and slides.
-                </p>
+                <p className="mt-3 text-sm text-muted-foreground">Call transcripts, key takeaways, and synthesis ready for memos and slides.</p>
               </div>
             </div>
             <div className="card-tilt relative mx-auto w-full max-w-5xl rounded-2xl border border-primary/10 bg-gradient-to-r from-primary/5 via-white to-sky-50/70 p-5 shadow-soft">
@@ -293,7 +393,6 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Screen 4: How it works */}
         <section className="bg-gradient-to-b from-secondary/70 via-background to-secondary/50 py-16">
           <div className="container space-y-8">
             <div className="space-y-2 text-left sm:text-center">
@@ -321,17 +420,14 @@ const Index = () => {
                 },
                 {
                   title: "3) Sensei runs the logistics",
-                  body: "Outreach, screening, scheduling, NDAs, and compliance checks — handled automatically.",
+                  body: "Outreach, screening, scheduling, NDAs, and compliance checks - handled automatically.",
                 },
                 {
                   title: "4) Turn conversations into reportable insights",
                   body: "Structured notes, transcripts, key insights, and synthesis organized by deal, theme, and question.",
                 },
               ].map((item, index) => (
-                <div
-                  key={item.title}
-                  className="rounded-xl border border-primary/30 bg-gradient-primary p-6 text-primary-foreground shadow-soft transition-transform hover:-translate-y-1 hover:shadow-medium"
-                >
+                <div key={item.title} className="rounded-xl border border-primary/30 bg-gradient-primary p-6 text-primary-foreground shadow-soft transition-transform hover:-translate-y-1 hover:shadow-medium">
                   <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary-foreground/15 text-primary-foreground font-semibold shadow-soft">
                     {index + 1}
                   </div>
@@ -348,3 +444,4 @@ const Index = () => {
 };
 
 export default Index;
+

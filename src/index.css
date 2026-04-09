@@ -2,95 +2,63 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
-
 @layer base {
   :root {
     --background: 0 0% 100%;
     --foreground: 215 25% 27%;
-
     --card: 0 0% 100%;
     --card-foreground: 215 25% 27%;
-
     --popover: 0 0% 100%;
     --popover-foreground: 215 25% 27%;
-
     --primary: 217 91% 60%;
     --primary-foreground: 0 0% 100%;
-    
     --primary-light: 217 91% 70%;
     --primary-dark: 217 91% 45%;
-
     --secondary: 210 40% 96%;
     --secondary-foreground: 215 25% 27%;
-
     --muted: 210 40% 96%;
     --muted-foreground: 215 20% 55%;
-
     --accent: 217 91% 95%;
     --accent-foreground: 217 91% 60%;
-
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
-
     --border: 214 32% 91%;
     --input: 214 32% 91%;
     --ring: 217 91% 60%;
-
     --radius: 0.75rem;
-    
     --gradient-primary: linear-gradient(135deg, hsl(217 91% 60%) 0%, hsl(217 91% 45%) 100%);
     --shadow-soft: 0 4px 6px -1px hsl(217 91% 60% / 0.1), 0 2px 4px -1px hsl(217 91% 60% / 0.06);
     --shadow-medium: 0 10px 15px -3px hsl(217 91% 60% / 0.1), 0 4px 6px -2px hsl(217 91% 60% / 0.05);
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
   .dark {
     --background: 215 28% 17%;
     --foreground: 0 0% 100%;
-
     --card: 215 28% 17%;
     --card-foreground: 0 0% 100%;
-
     --popover: 215 28% 17%;
     --popover-foreground: 0 0% 100%;
-
     --primary: 217 91% 60%;
     --primary-foreground: 0 0% 100%;
-    
     --primary-light: 217 91% 70%;
     --primary-dark: 217 91% 45%;
-
     --secondary: 215 28% 25%;
     --secondary-foreground: 0 0% 100%;
-
     --muted: 215 28% 25%;
     --muted-foreground: 215 20% 65%;
-
     --accent: 217 91% 25%;
     --accent-foreground: 217 91% 80%;
-
     --destructive: 0 62.8% 50%;
     --destructive-foreground: 0 0% 100%;
-
     --border: 215 28% 25%;
     --input: 215 28% 25%;
     --ring: 217 91% 60%;
@@ -109,118 +77,52 @@ All colors MUST be HSL.
   * {
     @apply border-border;
   }
-
   body {
     @apply bg-background text-foreground;
   }
 }
 
 @keyframes hero-float {
-  0% {
-    transform: translate3d(0, 0, 0) scale(1);
-    opacity: 0.9;
-  }
-  50% {
-    transform: translate3d(-60px, 30px, 0) scale(1.12);
-    opacity: 1;
-  }
-  100% {
-    transform: translate3d(0, 0, 0) scale(1);
-    opacity: 0.9;
-  }
+  0% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.9; }
+  50% { transform: translate3d(-60px, 30px, 0) scale(1.12); opacity: 1; }
+  100% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.9; }
 }
 
 @keyframes hero-drift {
-  0% {
-    transform: translate3d(0, 0, 0) scale(1);
-    opacity: 0.85;
-  }
-  50% {
-    transform: translate3d(70px, -40px, 0) scale(1.15);
-    opacity: 1;
-  }
-  100% {
-    transform: translate3d(0, 0, 0) scale(1);
-    opacity: 0.85;
-  }
+  0% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.85; }
+  50% { transform: translate3d(70px, -40px, 0) scale(1.15); opacity: 1; }
+  100% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.85; }
 }
 
 @keyframes hero-swell {
-  0% {
-    transform: translate3d(0, 0, 0) scale(1);
-    opacity: 0.8;
-  }
-  50% {
-    transform: translate3d(40px, 20px, 0) scale(1.2);
-    opacity: 1;
-  }
-  100% {
-    transform: translate3d(0, 0, 0) scale(1);
-    opacity: 0.8;
-  }
+  0% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.8; }
+  50% { transform: translate3d(40px, 20px, 0) scale(1.2); opacity: 1; }
+  100% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.8; }
 }
 
 @keyframes hero-sheen {
-  0% {
-    transform: translate3d(-40%, -15%, 0) rotate(8deg);
-    opacity: 0;
-  }
-  25% {
-    opacity: 0.45;
-  }
-  55% {
-    transform: translate3d(20%, 5%, 0) rotate(10deg);
-    opacity: 0.3;
-  }
-  100% {
-    transform: translate3d(60%, 20%, 0) rotate(12deg);
-    opacity: 0;
-  }
+  0% { transform: translate3d(-40%, -15%, 0) rotate(8deg); opacity: 0; }
+  25% { opacity: 0.45; }
+  55% { transform: translate3d(20%, 5%, 0) rotate(10deg); opacity: 0.3; }
+  100% { transform: translate3d(60%, 20%, 0) rotate(12deg); opacity: 0; }
 }
 
 @keyframes hero-aurora {
-  0% {
-    background-position: 0% 0%;
-    opacity: 0.35;
-  }
-  50% {
-    background-position: 100% 50%;
-    opacity: 0.55;
-  }
-  100% {
-    background-position: 0% 100%;
-    opacity: 0.35;
-  }
+  0% { background-position: 0% 0%; opacity: 0.35; }
+  50% { background-position: 100% 50%; opacity: 0.55; }
+  100% { background-position: 0% 100%; opacity: 0.35; }
 }
 
 @keyframes hero-bg-shift {
-  0% {
-    background-position: 0% 0%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 100%;
-  }
+  0% { background-position: 0% 0%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 100%; }
 }
 
-
 @layer utilities {
-  .animate-hero-float {
-    animation: hero-float 14s ease-in-out infinite;
-    will-change: transform;
-  }
-
-  .animate-hero-drift {
-    animation: hero-drift 18s ease-in-out infinite;
-    will-change: transform;
-  }
-
-  .animate-hero-swell {
-    animation: hero-swell 20s ease-in-out infinite;
-    will-change: transform;
-  }
+  .animate-hero-float { animation: hero-float 14s ease-in-out infinite; will-change: transform; }
+  .animate-hero-drift { animation: hero-drift 18s ease-in-out infinite; will-change: transform; }
+  .animate-hero-swell { animation: hero-swell 20s ease-in-out infinite; will-change: transform; }
 
   .hero-grain {
     background-image: radial-gradient(rgba(15, 23, 42, 0.1) 0.6px, transparent 0);
@@ -279,9 +181,7 @@ All colors MUST be HSL.
     box-shadow: 0 16px 40px -24px rgba(15, 23, 42, 0.35);
   }
 
-  .card-tilt:hover::after {
-    opacity: 1;
-  }
+  .card-tilt:hover::after { opacity: 1; }
 
   .mock-card {
     border-radius: 24px;
@@ -291,5 +191,5 @@ All colors MUST be HSL.
     box-shadow: 0 24px 60px -40px rgba(15, 23, 42, 0.45);
     backdrop-filter: blur(8px);
   }
-
 }
+
